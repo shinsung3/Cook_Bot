@@ -218,6 +218,9 @@ def _crawl_naver_keywords(text):
     #
     #     source = driver.page_source
 
+
+
+
     return u'\n'.join(new)
 #
 # def choice_menu(text):
