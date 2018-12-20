@@ -11,11 +11,6 @@ from flask import Flask, request, make_response, render_template
 
 app = Flask(__name__)
 
-slack_token = "xoxb-502761537154-507387448675-Kc6uC2zAwvkd5vbPzN2xzxwk"
-slack_client_id = "502761537154.507384341667"
-slack_client_secret = "927bf97a39c15da4e452503e32078fc3"
-slack_verification = "86jiU34UqwmqzgILMppWLqxw"
-sc = SlackClient(slack_token)
 
 driver = webdriver.Chrome(r'C:\Users\student\Desktop\chromedriver.exe')
 
@@ -210,23 +205,16 @@ def _crawl_naver_keywords(text):
             new.append(str(line) + "번 " + x.get_text().replace("\n", ' ').replace("★", ""))
             new_.append(x.get_text())
             line += 1
-    # else:
-    #     searchText = driver.find_element_by_id("srhRecipeText")
-    #     searchText.send_keys(text)
-    #     bt = driver.find_element_by_css_selector("button.btn.btn-default")
-    #     bt.click()
-    #
-    #     source = driver.page_source
+    else:
+        driver.get("http://www.10000recipe.com/recipe/list.html")
+        searchText = driver.find_element_by_id("srhRecipeText")
+        searchText.send_keys(text)
+        bt = driver.find_element_by_css_selector("button.btn.btn-default")
+        bt.click()
 
-
-
+        source = driver.page_source
 
     return u'\n'.join(new)
-#
-# def choice_menu(text):
-#     menus = new_[text-1]
-#
-#     return u'\n'.join(menus)
 
 # 이벤트 핸들하는 함수
 def _event_handler(event_type, slack_event):
