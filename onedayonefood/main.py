@@ -4,21 +4,28 @@ import os
 import re
 import urllib.request
 
+from recipeSearchKeyword import *
+
 from bs4 import BeautifulSoup
 from slackclient import SlackClient
 from selenium import webdriver
 from flask import Flask, request, make_response, render_template
 
+
 app = Flask(__name__)
 
+slack_token = "xoxb-502761537154-508511707139-YvPdap9lRvMqbGZSqNqu3uq8"
+slack_client_id = "502761537154.510016672070"
+slack_client_secret = "cd625f3ca20cd0d50cf83c2566587a10"
+slack_verification = "cd625f3ca20cd0d50cf83c2566587a10"
 sc = SlackClient(slack_token)
-
 driver = webdriver.Chrome(r'C:\Users\student\Desktop\chromedriver.exe')
-
+# http://cc01b936.ngrok.io/listening
 
 # 사용자 호출 전에 실행되어야 할 것
 # new_ = []
 # 크롤링 함수 구현하기
+
 def _crawl_naver_keywords(text):
     FindUrl = "http://www.10000recipe.com"
     a = "http://www.10000recipe.com/recipe/list.html?q=&cat1=&cat2=&cat3="
@@ -197,7 +204,16 @@ def _crawl_naver_keywords(text):
             new.append(str(line) + "번 " + x.get_text().replace("\n", ' ').replace("★", ""))
             new_.append(x.get_text())
             line += 1
-    elif "기타" or "아무거나" in text:
+    elif "기타"in text:
+        key = 34
+        url = a + str(key) + b
+        source = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(source, "html.parser")
+        for x in soup.find_all("h4", class_="ellipsis_title2"):
+            new.append(str(line) + "번 " + x.get_text().replace("\n", ' ').replace("★", ""))
+            new_.append(x.get_text())
+            line += 1
+    elif  "아무거나"  in text:
         key = 34
         url = a + str(key) + b
         source = urllib.request.urlopen(url).read()
@@ -207,13 +223,13 @@ def _crawl_naver_keywords(text):
             new_.append(x.get_text())
             line += 1
     else:
-        driver.get("http://www.10000recipe.com/recipe/list.html")
-        searchText = driver.find_element_by_id("srhRecipeText")
-        searchText.send_keys(text)
-        bt = driver.find_element_by_css_selector("button.btn.btn-default")
-        bt.click()
-
-        source = driver.page_source
+        # driver.get("http://www.10000recipe.com/recipe/list.html")
+        # searchText = driver.find_element_by_id("srhRecipeText")
+        # searchText.send_keys(text)
+        # bt = driver.find_element_by_css_selector("button.btn.btn-default")
+        # bt.click()
+        # new.append(driver.page_source)
+        crawl_detail_recipe(text,driver)
 
     return u'\n'.join(new)
 
@@ -222,18 +238,19 @@ def _event_handler(event_type, slack_event):
     print(slack_event["event"])
 
     if event_type == "app_mention":
-        msg = {}
-        msg['text'] = "Cook Bot!"
-        msg["image_url"] = "http://recipe1.ezmember.co.kr/img/thumb_over.png"
+        # msg = {}
+        # msg['text'] = "Cook Bot!"
+        # msg["image_url"] = "http://recipe1.ezmember.co.kr/img/thumb_over.png"
         channel = slack_event["event"]["channel"]
         text = slack_event["event"]["text"]
         keywords = _crawl_naver_keywords(text)
+
         # menus = choice_menu(text)
         sc.api_call(
             "chat.postMessage",
             channel=channel,
             text=keywords,
-            attachments = json.dumps([msg])
+            # attachments = json.dumps([msg])
         )
 
 
@@ -271,8 +288,8 @@ def hears():
 
 @app.route("/", methods=["GET"])
 def index():
-    return "<h1>Server is ready.</h1>"
+    return "<h1>Server is readysssssss</h1>"
 
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', port=5000)
+    app.run('127.0.0.1', port=5223)
