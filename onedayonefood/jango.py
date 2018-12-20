@@ -20,6 +20,8 @@ sc = SlackClient(slack_token)
 driver = webdriver.Chrome(r'C:\Users\student\Desktop\chromedriver.exe')
 
 # 세부 레시피 크롤링
+
+
 def crawl_detail_recipe(text):
     url = "http://tv.jtbc.joins.com/photo/pr10010331/pm10026814"
     driver.get(url)
