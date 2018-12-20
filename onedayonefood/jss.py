@@ -1,2 +1,4 @@
 def hello():
-    return "Hello, Guy?"
+    return "Hello, Guys?"
+
+print(hello())
