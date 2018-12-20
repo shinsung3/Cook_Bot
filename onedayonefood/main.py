@@ -20,7 +20,6 @@ sc = SlackClient(slack_token)
 driver = webdriver.Chrome(r'C:\Users\student\Desktop\chromedriver.exe')
 
 
-
 # 사용자 호출 전에 실행되어야 할 것
 # new_ = []
 # 크롤링 함수 구현하기
@@ -212,7 +211,12 @@ def _crawl_naver_keywords(text):
             new_.append(x.get_text())
             line += 1
     else:
-        pass
+        searchText = driver.find_element_by_id("srhRecipeText")
+        searchText.send_keys(text)
+        bt = driver.find_element_by_css_selector("button.btn.btn-default")
+        bt.click()
+
+        source = driver.page_source
 
     return u'\n'.join(new)
 #
