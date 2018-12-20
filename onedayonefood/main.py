@@ -210,13 +210,13 @@ def _crawl_naver_keywords(text):
             new.append(str(line) + "번 " + x.get_text().replace("\n", ' ').replace("★", ""))
             new_.append(x.get_text())
             line += 1
-    else:
-        searchText = driver.find_element_by_id("srhRecipeText")
-        searchText.send_keys(text)
-        bt = driver.find_element_by_css_selector("button.btn.btn-default")
-        bt.click()
-
-        source = driver.page_source
+    # else:
+    #     searchText = driver.find_element_by_id("srhRecipeText")
+    #     searchText.send_keys(text)
+    #     bt = driver.find_element_by_css_selector("button.btn.btn-default")
+    #     bt.click()
+    #
+    #     source = driver.page_source
 
     return u'\n'.join(new)
 #
