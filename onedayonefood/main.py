@@ -11,6 +11,7 @@ from flask import Flask, request, make_response, render_template
 
 app = Flask(__name__)
 
+sc = SlackClient(slack_token)
 
 driver = webdriver.Chrome(r'C:\Users\student\Desktop\chromedriver.exe')
 
