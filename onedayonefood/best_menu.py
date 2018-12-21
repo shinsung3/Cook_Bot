@@ -37,4 +37,4 @@ def best_menu(text):
         line += 1
     print(new)
     a = soup.find("span", class_="top_icon").get_text().strip()
-    return "★" + "오늘 가장 인기가 많은 요리 블로거" + "★\n" + u'\n'.join(new)
+    return "★" + "가장 인기가 많은 요리 블로거" + "★\n" + u'\n'.join(new)

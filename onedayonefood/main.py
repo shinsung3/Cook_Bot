@@ -10,6 +10,7 @@ from best_menu import *
 from hi import *
 from dongheedong import *
 from searching import *
+from main_keyword import *
 
 
 from bs4 import BeautifulSoup
@@ -20,11 +21,7 @@ from flask import Flask, request, make_response, render_template
 
 app = Flask(__name__)
 
-slack_token = ""
-slack_client_id = ""
-slack_client_secret = ""
-slack_verification = ""
-sc = SlackClient(slack_token)
+
 driver = webdriver.Chrome(r'C:\Users\student\Desktop\chromedriver.exe')
 # http://cc01b936.ngrok.io/listening
 
@@ -45,6 +42,7 @@ def _crawl_naver_keywords(text):
     # links_ = []
     # i = 0
     keywords = []
+    main_keyword(text)
     if "소고기" in text2:
         key = 70
         url = a + str(key) + b
@@ -70,258 +68,258 @@ def _crawl_naver_keywords(text):
         #     keywords.append(
         #         "<" + links[i] + "|" + str(i + 1) + "위: " + products[i].get_text().strip().replace('\n', ' ') + ">\n")
         # keywords.append(
-
-    elif "돼지고기" in text2:
-        key = 71
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "").replace('♡','')+">\n")
-            new_.append(x.get_text())
-            line += 1
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "닭고기" in text2:
-        key = 72
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "육류" in text2:
-        key = 23
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "채소류" in text2:
-        key = 28
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "해물류" in text2:
-        key = 24
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "달걀" in text2:
-        key = 50
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "유제품" in text2:
-        key = 50
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "가공식품류" in text2:
-        key = 33
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "쌀" in text2:
-        key = 47
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "밀가루" in text2:
-        key = 32
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "건어물" in text2:
-        key = 25
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "버섯" in text2:
-        key = 31
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "과일" in text2:
-        key = 48
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-
-    elif "콩" in text2:
-        key = 27
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "견과류" in text2:
-        key = 27
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "곡류" in text2:
-        key = 26
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif "기타"in text2:
-        key = 34
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
-    elif  "아무거나"  in text2:
-        key = 34
-        url = a + str(key) + b
-        source = urllib.request.urlopen(url).read()
-        soup = BeautifulSoup(source, "html.parser")
-        for y in soup.find_all("div", class_="col-xs-4"):
-            links.append(FindUrl + y.find("a")["href"])
-        for x in soup.find_all("h4", class_="ellipsis_title2"):
-            new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
-            new_.append(x.get_text())
-            line += 1
-
-        print(links)
-        return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    #
+    # elif "돼지고기" in text2:
+    #     key = 71
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "").replace('♡','')+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "닭고기" in text2:
+    #     key = 72
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "육류" in text2:
+    #     key = 23
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "채소류" in text2:
+    #     key = 28
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "해물류" in text2:
+    #     key = 24
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "달걀" in text2:
+    #     key = 50
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "유제품" in text2:
+    #     key = 50
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "가공식품류" in text2:
+    #     key = 33
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "쌀" in text2:
+    #     key = 47
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "밀가루" in text2:
+    #     key = 32
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "건어물" in text2:
+    #     key = 25
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "버섯" in text2:
+    #     key = 31
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "과일" in text2:
+    #     key = 48
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    #
+    # elif "콩" in text2:
+    #     key = 27
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "견과류" in text2:
+    #     key = 27
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "곡류" in text2:
+    #     key = 26
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif "기타"in text2:
+    #     key = 34
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
+    # elif  "아무거나"  in text2:
+    #     key = 34
+    #     url = a + str(key) + b
+    #     source = urllib.request.urlopen(url).read()
+    #     soup = BeautifulSoup(source, "html.parser")
+    #     for y in soup.find_all("div", class_="col-xs-4"):
+    #         links.append(FindUrl + y.find("a")["href"])
+    #     for x in soup.find_all("h4", class_="ellipsis_title2"):
+    #         new.append("<" + links[line-1] + "|" + str(line) + "번 " + x.get_text().strip().replace("\n", ' ').replace("★", "")+">\n")
+    #         new_.append(x.get_text())
+    #         line += 1
+    #
+    #     print(links)
+    #     return text2 + "★메뉴 추천★ \n" + u'\n'.join(new)
     elif "인기블로거" in text2:
         return best_menu(text2)
     elif "냉부" in text2:
@@ -344,6 +342,7 @@ def _crawl_naver_keywords(text):
         return crawl_detail_recipe1(text2, driver)
     elif "오늘 순위" in text2:
         return crawl_detail_recipe1(text2, driver)
+
     else:
         # driver.get("http://www.10000recipe.com/recipe/list.html")
         # searchtext2 = driver.find_element_by_id("srhRecipetext2")
